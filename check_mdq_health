@@ -1,0 +1,57 @@
+#!/usr/bin/env perl
+
+use warnings;
+use strict;
+use Nagios::Plugin;
+use LWP::UserAgent;
+use HTTP::Request::Common;
+use JSON;
+
+my $VERSION = "0.1";
+
+# use Nagios::Plugin::Getopt to process the @ARGV command line options:
+#   --verbose, --help, --usage and --timeout are defined automatically.
+my $np = Nagios::Plugin->new(
+    usage => "Usage: %s"
+    . " [ -u|--url <url> ]"
+    . " [ -t|--timeout <timeout> ]"
+    . " [ -v|--verbose ]"
+    . " [ -h|--help ]",
+    version => $VERSION,
+);
+
+# Add valid command line options
+$np->add_arg(
+    spec => 'url|u=s',
+    help => "-u, --url=URL\n"
+    . "   URL to fetch the health document from, e.g.:\n"
+    . "   --url http://mdq.example.org/health",
+    required => 1,
+);
+
+# Parse @ARGV and process standard arguments (e.g. usage, help, version)
+$np->getopts;
+
+# Fetch document from URL
+my $ua = LWP::UserAgent->new;
+$ua->timeout($np->opts->timeout);
+$ua->default_header('Accept' => 'application/json');
+
+my $response = $ua->request(GET $np->opts->url);
+if (!$response->is_success) {
+    $np->nagios_exit(CRITICAL, "Connection failed: " . $response->status_line);
+}
+
+# Parse JSON
+my $json_response = decode_json($response->content);
+
+my $status = $json_response->{'status'};
+
+if ($status eq 'UP') {
+    $np->nagios_exit(OK, 'status is UP');
+} elsif ($status eq 'DEGRADED') {
+    $np->nagios_exit(WARNING, 'status is DEGRADED');
+} else {
+    $np->nagios_exit(CRITICAL, "status is $status");
+}
+
