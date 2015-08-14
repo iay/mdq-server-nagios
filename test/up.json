@@ -1,0 +1,11 @@
+{
+  "status" : "UP",
+  "itemCollection.SAML" : {
+    "status" : "UP",
+    "generation" : 171,
+    "identifiers" : 9,
+    "lastRefreshed" : "2015-08-13T16:59:09.728Z",
+    "age" : "PT17M7.034S",
+    "nextRefresh" : "2015-08-13T17:59:09.728Z"
+  }
+}
