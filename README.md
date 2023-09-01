@@ -5,8 +5,8 @@ Nagios plugin to provide monitoring of [mdq-server](https://github.com/iay/mdq-s
 ## Prerequisites
 
 The script uses a number of Perl modules. Most of them should already be installed on a system
-running Nagios, but `Nagios::Plugin` may need to be acquired separately. If you are running on
-a RHEL/CentOS system with EPEL available, you can use `yum install perl-Nagios-Plugin`.
+running Nagios, but `Monitoring::Plugin` may need to be acquired separately. If you are running on
+a RHEL-derived system with EPEL available, you can use `yum install perl-Monitoring-Plugin`.
 
 ## Testing and Installing
 
@@ -42,7 +42,7 @@ A service check then looks like this:
 
 ## Copyright and License
 
-The entire package is Copyright (C) 2015, Ian A. Young.
+The entire package is Copyright (C) 2015–2023, Ian A. Young.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
