@@ -2,7 +2,7 @@
 
 use warnings;
 use strict;
-use Nagios::Plugin;
+use Monitoring::Plugin;
 use LWP::UserAgent;
 use HTTP::Request::Common;
 use JSON;
@@ -11,7 +11,7 @@ my $VERSION = "0.1";
 
 # use Nagios::Plugin::Getopt to process the @ARGV command line options:
 #   --verbose, --help, --usage and --timeout are defined automatically.
-my $np = Nagios::Plugin->new(
+my $np = Monitoring::Plugin->new(
     usage => "Usage: %s"
     . " [ -u|--url <url> ]"
     . " [ -t|--timeout <timeout> ]"
